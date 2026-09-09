@@ -1,0 +1,15 @@
+name = "ep-analytics"
+main = "src/index.js"
+compatibility_date = "2026-05-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "ep-analytics-db"
+database_id = "local-d1-id-placeholder"
+
+[triggers]
+crons = ["0 3 * * *"]
+
+[vars]
+RETENZIONE_GIORNI = "30"
+DURATA_MAX_SECONDI = "600"
