@@ -6,7 +6,11 @@ export function originConsentito(request, dominio) {
     const host = new URL(origin).hostname
     // Supporto per sviluppo locale su localhost
     if (host === 'localhost' || host === '127.0.0.1') return origin
-    return host === dominio || host.endsWith('.' + dominio) ? origin : null
+    const listaDomini = dominio.split(',').map(d => d.trim().toLowerCase())
+    for (const d of listaDomini) {
+      if (host === d || host.endsWith('.' + d)) return origin
+    }
+    return null
   } catch {
     return null
   }
