@@ -64,10 +64,12 @@ export async function dettaglioSito(env, sitoId, giorni) {
 
 export async function contatorePubblico(env, sitoId) {
   const res = await env.DB.prepare(`
-    SELECT COUNT(*) AS visite
+    SELECT COUNT(DISTINCT COALESCE(visitatore_hash, sessione)) AS unici
     FROM eventi
     WHERE sito_id = ? AND tipo = 'view'
   `).bind(sitoId).first()
 
-  return { visite: res?.visite ?? 0 }
+  const unici = res?.unici ?? 0
+  return { visite: unici, unici }
 }
+
